@@ -3,6 +3,7 @@ from typing import Optional
 from tournament.services.sql_service import SQLService
 from tournament.models.round import Round
 import tournament.models.enums as Enums
+import logging
 
 class Bracket():
 
@@ -27,12 +28,6 @@ class Bracket():
         for row in rows:
             self.get_round(row["round_id"])
 
-    # TODO add players as tournament players
-
-    def _load_players(self):
-        rows = self.sql.fetchall("SELECT player_id FROM tournament_players WHERE tournament_id = ?", (self.id,))
-        self.players = [TournamentPlayer(self.sql, row["player_id"]) for row in rows]
-
     def exists(self) -> bool:
         row = self.sql.fetchone(
             "SELECT * FROM brackets WHERE id = ?",
@@ -48,3 +43,24 @@ class Bracket():
             else:
                 self.rounds[round_id] = None
         return self.rounds[round_id]
+    
+    def get_state(self) -> Enums.BracketState:
+        return self.state
+
+    def set_to_next_state(self):
+        if self.state == None:
+            self.set_state(Enums.BracketState.PENDING)
+        elif self.state == Enums.BracketState.PENDING:
+            self.set_state(Enums.BracketState.IN_PROGRESS)
+        elif self.state == Enums.BracketState.IN_PROGRESS:
+            self.set_state(Enums.BracketState.FINISHED)
+    
+    def set_state(self, new_state: Enums.BracketState):
+        try:
+            self.sql.execute(
+                "UPDATE brackets SET state = ? WHERE id = ?",
+                (new_state, self.id)
+            )
+            self.state = new_state
+        except Exception as e:
+            logging.error(f"Failed to set bracket state: {e}")

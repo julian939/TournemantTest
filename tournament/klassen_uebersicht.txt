@@ -1,0 +1,124 @@
+**Notwendig:**
+- Tournament
+- Bracket
+- Round
+- Match
+- TournamentTeam
+- TournamentPlayer
+- Player
+- SQLService
+
+**Optional, aber sinnvoll für größere Systeme:**
+- TournamentManager
+- GameManager (für Steuerung/Kommandos)
+- PlayerManager (nur bei globaler Spieler-Verwaltung)
+
+---
+
+## Vorschlag: Wichtige Methoden pro Klasse
+
+### Tournament
+- `__init__`, `_load`, `_load_brackets`, `_load_players`
+- `get_bracket(bracket_id)`
+- `add_bracket(bracket)`
+- `remove_bracket(bracket_id)`
+- `add_player(player)`
+- `remove_player(player_id)`
+- `get_team(team_id)`
+- `add_team(team)`
+- `remove_team(team_id)`
+- `start()`
+- `finish()`
+- `exists()`
+
+### TournamentManager
+- `__init__`, `_load`
+- `get_tournament(tournament_id)`
+- `create_tournament(...)`
+- `delete_tournament(tournament_id)`
+- `list_tournaments()`
+
+### Bracket
+- `__init__`, `_load`, `_load_rounds`
+- `get_round(round_id)`
+- `add_round(round)`
+- `remove_round(round_id)`
+- `get_state()`
+- `set_state(new_state)`
+- `set_to_next_state()`
+- `exists()`
+
+### Round
+- `__init__`, `_load`, `_load_matches`
+- `get_match(match_id)`
+- `add_match(match)`
+- `remove_match(match_id)`
+- `get_state()`
+- `set_state(new_state)`
+- `set_to_next_state()`
+- `exists()`
+
+### Match
+- `__init__`, `_load`
+- `get_state()`
+- `set_state(new_state)`
+- `set_to_next_state()`
+- `get_host()`
+- `set_host(player)`
+- `get_code()`
+- `set_code(code)`
+- `exists()`
+
+### TournamentTeam
+- `__init__`, `_load`, `_load_players`
+- `add_player(player)`
+- `remove_player(player_id)`
+- `get_players()`
+- `exists()`
+
+### TournamentPlayer
+- `__init__`, `_load`
+- `get_bracket_player(bracket_id)`
+- `get_match_player(match_id)`
+- `get_team()`
+- `set_team(team)`
+- `exists()`
+
+### Player
+- `__init__`, `_load`
+- `get_mmr()`
+- `set_mmr(mmr)`
+- `exists()`
+
+### SQLService
+- `execute(sql, params)`
+- `fetchone(sql, params)`
+- `fetchall(sql, params)`
+- `close()`
+- `setup()`
+
+### GameManager (optional, für Steuerung)
+- `start_tournament(tournament_id)`
+- `end_tournament(tournament_id)`
+- `register_player(tournament_id, player_id)`
+- `create_bracket(tournament_id, ...)`
+- `advance_bracket(bracket_id)`
+- `report_match_result(match_id, result)`
+
+### PlayerManager (optional)
+- `get_player(player_id)`
+- `create_player(...)`
+- `delete_player(player_id)`
+- `list_players()`
+
+---
+
+## Fazit
+
+- Du hast keine überflüssigen Klassen, solange du die Manager wirklich nutzt.
+- Die wichtigsten Modelle und Manager sind vorhanden.
+- Die Methoden oben sind ein Vorschlag für ein vollständiges, flexibles System.  
+  Du kannst sie nach Bedarf anpassen oder erweitern.
+
+Wenn du noch spezielle Features planst (z.B. Statistiken, Historie, Benachrichtigungen), könnten weitere Klassen/Methoden sinnvoll sein.  
+Für ein klassisches Turniersystem bist du mit dieser Struktur aber sehr gut aufgestellt!
