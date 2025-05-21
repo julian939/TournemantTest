@@ -15,7 +15,6 @@ class Match():
         self.state = Optional[MatchState] = None
         self.db = SQL()
 
-
     '''
         GAMESTATE PRICIPLE
     '''

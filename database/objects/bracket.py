@@ -2,6 +2,7 @@ from enum import Enum, auto
 from typing import Optional
 import logging
 from database.manager.sqlmanager import SQL
+from database.objects.match import Match
 
 class BracketState(Enum):
     NOT_STARTED = auto()
@@ -15,6 +16,8 @@ class Bracket():
         self.state = Optional[BracketState] = None
         self.db = SQL()
 
+    def get_matches(self):
+        return [Match(1), Match(2), Match(3)]
 
     '''
         GAMESTATE PRICIPLE

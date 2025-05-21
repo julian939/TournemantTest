@@ -2,6 +2,7 @@ from enum import Enum, auto
 from typing import Optional
 import logging
 from database.manager.sqlmanager import SQL
+from database.objects.bracket import Bracket
 
 class TournamentState(Enum):
     SETUP = auto()
@@ -16,6 +17,8 @@ class Tournament():
         self.state = Optional[TournamentState] = None
         self.db = SQL()
 
+    def get_brackets(self):
+        return [Bracket(1), Bracket(2), Bracket(3)]
 
     '''
         GAMESTATE PRICIPLE
@@ -46,3 +49,6 @@ class Tournament():
             self.set_state(new_state)
         else:
             raise ValueError(f"Invalid state transition from {self.state} to {new_state}")
+        
+    def get_players(self):
+        return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
