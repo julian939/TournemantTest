@@ -31,14 +31,14 @@
 - `finish()`
 - `exists()`
 
-### TournamentManager
+### TournamentManager - DONE
 - `__init__`, `_load`
 - `get_tournament(tournament_id)`
 - `create_tournament(...)`
 - `delete_tournament(tournament_id)`
 - `list_tournaments()`
 
-### Bracket
+### Bracket - DONE
 - `__init__`, `_load`, `_load_rounds`
 - `get_round(round_id)`
 - `add_round(round)`
@@ -48,7 +48,7 @@
 - `set_to_next_state()`
 - `exists()`
 
-### Round
+### Round - DONE
 - `__init__`, `_load`, `_load_matches`
 - `get_match(match_id)`
 - `add_match(match)`
@@ -58,7 +58,7 @@
 - `set_to_next_state()`
 - `exists()`
 
-### Match
+### Match - DONE
 - `__init__`, `_load`
 - `get_state()`
 - `set_state(new_state)`
@@ -69,7 +69,7 @@
 - `set_code(code)`
 - `exists()`
 
-### TournamentTeam
+### TournamentTeam - WORKING ON
 - `__init__`, `_load`, `_load_players`
 - `add_player(player)`
 - `remove_player(player_id)`
@@ -90,7 +90,7 @@
 - `set_mmr(mmr)`
 - `exists()`
 
-### SQLService
+### SQLService - DONE
 - `execute(sql, params)`
 - `fetchone(sql, params)`
 - `fetchall(sql, params)`

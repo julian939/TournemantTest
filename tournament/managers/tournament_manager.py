@@ -58,7 +58,6 @@ class TournamentManager():
         
         self.tournaments[tournament_id] = Tournament(self.sql, tournament_id)
         
-
     def delete_tournament(self, tournament_id: int):
         tournament = self.get_tournament(tournament_id)
         if tournament:

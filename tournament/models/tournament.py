@@ -27,7 +27,9 @@ class Tournament():
 
         self.brackets: dict[int, Bracket] = {}
         self.players: list[TournamentPlayer] = []
-        self._load()
+        
+        if self.exists():
+            self._load()
 
     def _load(self):
         row = self.sql.fetchone("SELECT * FROM tournaments WHERE id = ?", (self.id,))
@@ -56,6 +58,13 @@ class Tournament():
     def _load_players(self):
         rows = self.sql.fetchall("SELECT player_id FROM tournament_players WHERE tournament_id = ?", (self.id,))
         self.players = [TournamentPlayer(self.sql, row["player_id"]) for row in rows]
+
+    def exists(self) -> bool:
+        row = self.sql.fetchone(
+            "SELECT * FROM tournaments WHERE id = ?",
+            (self.id,)
+        )
+        return row is not None
 
     def get_bracket(self, bracket_id: int) -> Bracket:
         if bracket_id not in self.brackets:

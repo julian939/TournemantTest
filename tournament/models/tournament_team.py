@@ -19,3 +19,10 @@ class TournamentTeam():
     def _load_players(self):
         rows = self.sql.fetchall("SELECT player_id FROM team_players WHERE team_id = ?", (self.id,))
         self.players = [TournamentPlayer(self.sql, self.tournament_id, row["player_id"]) for row in rows]
+
+    def exists(self) -> bool:
+        row = self.sql.fetchone(
+            "SELECT * FROM tournament_teams WHERE id = ? AND tournament_id = ?",
+            (self.id, self.tournament_id)
+        )
+        return row is not None
