@@ -69,14 +69,14 @@
 - `set_code(code)`
 - `exists()`
 
-### TournamentTeam - WORKING ON
+### TournamentTeam - DONE
 - `__init__`, `_load`, `_load_players`
 - `add_player(player)`
 - `remove_player(player_id)`
 - `get_players()`
 - `exists()`
 
-### TournamentPlayer
+### TournamentPlayer - DONE
 - `__init__`, `_load`
 - `get_bracket_player(bracket_id)`
 - `get_match_player(match_id)`
@@ -84,7 +84,7 @@
 - `set_team(team)`
 - `exists()`
 
-### Player
+### Player - DONE
 - `__init__`, `_load`
 - `get_mmr()`
 - `set_mmr(mmr)`

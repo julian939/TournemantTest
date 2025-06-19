@@ -6,6 +6,7 @@ from tournament.services.sql_service import SQLService
 from tournament.models.bracket import Bracket
 from tournament.models.tournament_player import TournamentPlayer
 import tournament.models.enums as Enums
+import logging
 
 class Tournament():
 
@@ -74,5 +75,36 @@ class Tournament():
             else:
                 self.brackets[bracket_id] = None
         return self.brackets[bracket_id]
+    
+    def add_bracket(self) -> Optional[int]:
+        new_bracket_id = self.sql.execute(
+            "INSERT INTO brackets (state) VALUES (?)",
+            (Enums.BracketState.PENDING,)
+        )
+        if new_bracket_id:
+            self.sql.execute(
+                "INSERT INTO tournament_brackets (tournament_id, bracket_id) VALUES (?, ?)",
+                (self.id, new_bracket_id)
+            )  
+            new_bracket = Bracket(self.sql, new_bracket_id)
+            self.brackets[new_bracket_id] = new_bracket
+            return new_bracket_id
+        else:
+            logging.error(f"Failed to create a new bracket for tournament {self.id}")
+            return None
+        
+    def remove_bracket(self, bracket_id: int):
+        if bracket_id in self.brackets:
+            self.sql.execute(
+                "DELETE FROM tournament_brackets WHERE tournament_id = ? AND bracket_id = ?",
+                (self.id, bracket_id)
+            )
+            self.sql.execute(
+                "DELETE FROM brackets WHERE id = ?",
+                (bracket_id,)
+            )
+            del self.brackets[bracket_id]
+        else:
+            logging.warning(f"Bracket {bracket_id} does not exist in tournament {self.id}")
 
     
