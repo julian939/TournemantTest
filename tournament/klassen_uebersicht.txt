@@ -105,7 +105,7 @@
 - `advance_bracket(bracket_id)`
 - `report_match_result(match_id, result)`
 
-### PlayerManager (optional)
+### PlayerManager (optional) - ONLY CREaTE LEFT
 - `get_player(player_id)`
 - `create_player(...)`
 - `delete_player(player_id)`
